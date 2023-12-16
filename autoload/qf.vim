@@ -130,7 +130,9 @@ function! qf#OpenQuickfix()
             call setqflist(qf#ShortenPathsInList(qf_list), 'a')
         endif
 
-        execute get(g:, "qf_auto_resize", 1) ? 'cclose|' . min([ max_height, len(qf_list) ]) . 'cwindow' : 'cclose|cwindow'
+        if get(g:, "qf_auto_resize", 1)
+            execute min([ winheight(getqflist({'winid' : 1}).winid), max_height, len(qf_list) ]) . 'cwindow'
+        endif
     endif
 endfunction
 
